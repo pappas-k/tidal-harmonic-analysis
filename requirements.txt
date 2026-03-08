@@ -1,0 +1,5 @@
+uptide
+numpy
+pandas
+scipy
+matplotlib
