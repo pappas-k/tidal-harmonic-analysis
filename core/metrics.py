@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 core/metrics.py
 Tidal energy and variability metrics.

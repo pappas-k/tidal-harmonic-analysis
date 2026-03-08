@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 core/io.py
 Load and quality-control BODC tidal gauge data.

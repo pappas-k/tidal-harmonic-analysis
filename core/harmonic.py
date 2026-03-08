@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 core/harmonic.py
 Tidal harmonic analysis and signal reconstruction via the uptide library.
