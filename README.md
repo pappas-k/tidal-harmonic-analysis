@@ -74,7 +74,7 @@ pip install -r requirements.txt
 Place your BODC tidal gauge CSV at the path configured in `analyse.py` (default: `Avonmouth_20040101_20120430.csv`), then run:
 
 ```bash
-python analyse.py
+python3 analyse.py
 ```
 
 The figure is saved to `figures/fig_harmonic_analysis.png`.
