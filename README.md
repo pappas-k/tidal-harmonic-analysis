@@ -17,6 +17,8 @@ Demonstrated on **Avonmouth** (Bristol Channel, UK) — one of the highest tidal
 **(c)** Tidal constituent amplitudes — M2 dominates at 4.29 m, driven by resonance in the Bristol Channel funnel geometry.
 **(d)** NRMSE vs number of constituents — sharp improvement up to ~12, then diminishing returns.
 
+> The spring-neap cycle (~14 days) in panel (a) arises from the constructive/destructive interference of M2 and S2.
+
 ---
 
 ## Method
