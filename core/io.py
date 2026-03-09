@@ -30,7 +30,8 @@ def load_bodc(filepath: str, start_date: datetime.datetime):
     eta : np.ndarray
         De-meaned tidal elevation in metres.
     """
-    n_rows = sum(1 for _ in open(filepath)) - 2          # data rows only
+    with open(filepath, encoding="utf-8") as f:
+        n_rows = sum(1 for _ in f) - 2                   # data rows only
     t_raw = np.arange(0, n_rows * 15 * 60, 15 * 60)      # uniform 15-min grid
 
     eta_raw = np.loadtxt(filepath, skiprows=2, usecols=(11,), dtype=float, delimiter=",")
