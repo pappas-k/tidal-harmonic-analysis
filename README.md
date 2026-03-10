@@ -54,6 +54,7 @@ Avonmouth sits at the mouth of the Bristol Channel, which acts as a natural funn
 | Mean neap range | ~6.5 m |
 | Dominant constituent | M2 — amplitude 4.29 m |
 | Data period | Jan 2004 – Apr 2012 (8.3 years) |
+| Data availability | ~98% after QC (281,304 / 288,384 observations retained) |
 | Source | BODC UK National Tide Gauge Network |
 
 ---
