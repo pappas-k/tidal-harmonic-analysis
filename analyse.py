@@ -116,10 +116,40 @@ def main():
         nrmse_scan[n] = float(np.sqrt(np.mean((eta - eta_i) ** 2))) / sigma_gauge
         print(f"  {n:2d} cons. → NRMSE = {nrmse_scan[n]:.4f}")
 
-    # ── 5. Plot ────────────────────────────────────────────────────────────────
+    # ── 5. Tidal regime (Munk-Cartwright form factor) ─────────────────────────
+    ff = _form_factor(ha)
+    if   ff < 0.25: regime = "semi-diurnal"
+    elif ff < 1.5:  regime = "mixed, predominantly semi-diurnal"
+    elif ff < 3.0:  regime = "mixed, predominantly diurnal"
+    else:           regime = "diurnal"
+    print(f"\nForm factor  F = (K1+O1)/(M2+S2) = {ff:.4f}  →  {regime}")
+
+    # ── 6. Plot ────────────────────────────────────────────────────────────────
     print("\nPlotting …")
     _fig_harmonic_analysis(t, eta, ha, reconstructions, nrmse_scan)
     print(f"Figure saved to {FIG_DIR}/")
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Helpers
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _form_factor(ha):
+    """Munk-Cartwright tidal form factor F = (K1 + O1) / (M2 + S2).
+
+    Classifies tidal regime:
+        F < 0.25        semi-diurnal
+        0.25 <= F < 1.5 mixed, predominantly semi-diurnal
+        1.5  <= F < 3.0 mixed, predominantly diurnal
+        F >= 3.0        diurnal
+    """
+    def amp(name):
+        row = ha[ha["Constituent"] == name]
+        return float(row["Amplitude"].values[0]) if len(row) else 0.0
+
+    k1, o1 = amp("K1"), amp("O1")
+    m2, s2 = amp("M2"), amp("S2")
+    return (k1 + o1) / (m2 + s2) if (m2 + s2) > 0 else float("nan")
 
 
 # ─────────────────────────────────────────────────────────────────────────────
