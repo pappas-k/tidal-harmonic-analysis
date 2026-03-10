@@ -3,8 +3,9 @@
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-A clean Python workflow for tidal harmonic analysis using real BODC gauge data.
-Demonstrated on **Avonmouth** (Bristol Channel, UK) — one of the highest tidal ranges in the world (~14 m spring range).
+A clean, reproducible Python workflow for **tidal harmonic analysis** of long-term sea-level records. Starting from raw BODC tide gauge data, the project extracts harmonic constituents, reconstructs the tidal signal with increasing numbers of constituents, and quantifies accuracy — providing a rigorous foundation for tidal energy resource assessment and coastal hydrodynamic modelling.
+
+Demonstrated on **Avonmouth** (Bristol Channel, UK) — one of the highest tidal ranges in the world (~14 m spring range), with a strongly semi-diurnal character driven by near-resonant amplification in the Bristol Channel.
 
 ---
 
