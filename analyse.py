@@ -117,6 +117,10 @@ def main():
         nrmse_scan[n] = float(np.sqrt(np.mean((eta - eta_i) ** 2))) / sigma_gauge
         print(f"  {n:2d} cons. → NRMSE = {nrmse_scan[n]:.4f}")
 
+    nrmse_12       = nrmse_scan.get(12, float("nan"))
+    var_explained  = (1.0 - nrmse_12 ** 2) * 100
+    print(f"  Variance explained (12 cons.): {var_explained:.1f}%")
+
     # ── 5. Tidal regime (Munk-Cartwright form factor) ─────────────────────────
     ff = _form_factor(ha)
     if   ff < 0.25: regime = "semi-diurnal"
