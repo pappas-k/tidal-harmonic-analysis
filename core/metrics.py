@@ -53,6 +53,11 @@ def find_extrema(t: np.ndarray, eta: np.ndarray):
     return t[hw_idx], eta[hw_idx], t[lw_idx], eta[lw_idx]
 
 
+def mean_range(t_hw, eta_hw, t_lw, eta_lw) -> float:
+    """Mean tidal range [m]."""
+    return float(np.mean(tidal_ranges(t_hw, eta_hw, t_lw, eta_lw)))
+
+
 def tidal_ranges(t_hw, eta_hw, t_lw, eta_lw) -> np.ndarray:
     """Compute tidal range for each successive HW–LW half-cycle.
 
