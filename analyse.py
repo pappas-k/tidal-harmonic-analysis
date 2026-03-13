@@ -44,9 +44,10 @@ LAT, LON   = 51.5109, -2.7150
 FIG_DIR = Path("figures")
 FIG_DIR.mkdir(exist_ok=True)
 
-DT     = 108.0                                           # reconstruction time-step [s]
-N_PLOT = [2, 4, 8, 12]                                   # constituents shown in signal comparison
-N_SCAN = [1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 25, 30]  # NRMSE curve
+DT          = 108.0                                          # reconstruction time-step [s]
+N_PLOT      = [2, 4, 8, 12]                                  # constituents shown in signal comparison
+N_SCAN      = [1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 25, 30] # NRMSE curve
+WINDOW_DAYS = 28                                             # days of signal shown in panel (a)
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Style
@@ -179,7 +180,7 @@ def _fig_harmonic_analysis(t, eta, ha, reconstructions, nrmse_scan):
     )
 
     # ── Window: first 28 days ─────────────────────────────────────────────────
-    window = 28 * 86400
+    window = WINDOW_DAYS * 86400
     t_mask = t <= t[0] + window
     t_w    = t[t_mask]
     eta_w  = eta[t_mask]
@@ -196,7 +197,7 @@ def _fig_harmonic_analysis(t, eta, ha, reconstructions, nrmse_scan):
                     label=f"{n} constituents", zorder=5)
 
     ax_sig.axhline(0, color="grey", lw=0.5, ls="--")
-    ax_sig.set_xlim(0, 28)
+    ax_sig.set_xlim(0, WINDOW_DAYS)
     ax_sig.set_xlabel("Time (days)")
     ax_sig.set_ylabel("η (m)")
     ax_sig.legend(loc="upper left", ncol=2, framealpha=1.0)
@@ -226,7 +227,7 @@ def _fig_harmonic_analysis(t, eta, ha, reconstructions, nrmse_scan):
                     label=f"{n} cons.")
 
     ax_res.axhline(0, color="grey", lw=0.6, ls="--")
-    ax_res.set_xlim(0, 28)
+    ax_res.set_xlim(0, WINDOW_DAYS)
     ax_res.set_xlabel("Time (days)")
     ax_res.set_ylabel("Residual η (m)")
     ax_res.legend(loc="upper right", ncol=3, framealpha=0.7)
