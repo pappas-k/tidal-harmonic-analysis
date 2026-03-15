@@ -119,6 +119,27 @@ python3 analyse.py
 
 The figure is saved to `figures/fig_harmonic_analysis.png`.
 
+**Example output:**
+```
+Loading Avonmouth tide gauge data …
+  281,304 / 292,128 observations retained  (96.3% availability,  8.3 years)
+Performing harmonic analysis …
+Reconstructing signals …
+Computing NRMSE curve …
+  Variance explained (12 cons.): 98.3%
+Form factor  F = (K1+O1)/(M2+S2) = 0.0237  →  semi-diurnal
+
+────────────────────────────────────────────────────
+  Location       : Avonmouth  (51.5109°N, 2.715°W)
+  Period         : Jan 2004 – Apr 2012  (8.3 yr)
+  Availability   : 96.3%  (281,304 obs.)
+  M2 amplitude   : 4.29 m
+  Form factor    : 0.0237  (semi-diurnal)
+  NRMSE (12 cons): 0.129  →  98.3% variance explained
+  Figure         : figures/fig_harmonic_analysis.png
+────────────────────────────────────────────────────
+```
+
 ---
 
 ## Key results — Avonmouth (2004–2012)
