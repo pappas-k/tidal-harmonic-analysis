@@ -22,10 +22,12 @@ Usage
 import datetime
 from pathlib import Path
 
+import matplotlib.dates as mdates
 import matplotlib.gridspec as gridspec
 import matplotlib.ticker as ticker
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 
 from core.io       import load_bodc
 from core.harmonic import harmonic_analysis, reconstruct
@@ -193,26 +195,29 @@ def _fig_harmonic_analysis(t, eta, ha, reconstructions, nrmse_scan):
         fontsize=9, color="grey", va="top",
     )
 
-    # ── Window: first 28 days ─────────────────────────────────────────────────
-    window = WINDOW_DAYS * 86400
-    t_mask = t <= t[0] + window
-    t_w    = t[t_mask]
-    eta_w  = eta[t_mask]
-    t_days = (t_w - t_w[0]) / 86400
+    # ── Window: first WINDOW_DAYS days ────────────────────────────────────────
+    window  = WINDOW_DAYS * 86400
+    t_mask  = t <= t[0] + window
+    t_w     = t[t_mask]
+    eta_w   = eta[t_mask]
+    dates_w = pd.to_datetime(START_DATE) + pd.to_timedelta(t_w, unit="s")
 
     # ── (a) Signal comparison ──────────────────────────────────────────────────
-    ax_sig.plot(t_days, eta_w, color=GAUGE_COL, lw=0.9, label="Gauge data", zorder=6)
+    ax_sig.plot(dates_w, eta_w, color=GAUGE_COL, lw=0.9, label="Gauge data", zorder=6)
     for n in [2, 8, 12]:
         t_r, eta_r = reconstructions[n]
         r_mask     = (t_r >= t_w[0]) & (t_r <= t_w[-1])
-        t_r_days   = (t_r[r_mask] - t_w[0]) / 86400
-        ax_sig.plot(t_r_days, eta_r[r_mask],
+        dates_r    = pd.to_datetime(START_DATE) + pd.to_timedelta(t_r[r_mask], unit="s")
+        ax_sig.plot(dates_r, eta_r[r_mask],
                     color=CON_COLS[n], lw=1.1, alpha=0.9,
                     label=f"{n} constituents", zorder=5)
 
     ax_sig.axhline(0, color="grey", lw=0.5, ls="--")
-    ax_sig.set_xlim(0, WINDOW_DAYS)
-    ax_sig.set_xlabel("Time (days)")
+    ax_sig.set_xlim(dates_w[0], dates_w[-1])
+    ax_sig.xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=0, interval=2))
+    ax_sig.xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
+    ax_sig.tick_params(axis="x", labelrotation=20)
+    ax_sig.set_xlabel("")
     ax_sig.set_ylabel("η (m)")
     ax_sig.legend(loc="upper left", ncol=2, framealpha=1.0)
     ax_sig.set_title(
@@ -236,13 +241,16 @@ def _fig_harmonic_analysis(t, eta, ha, reconstructions, nrmse_scan):
     for n in [2, 8, 12]:
         t_r, eta_r = reconstructions[n]
         eta_i      = np.interp(t_w, t_r, eta_r)
-        ax_res.plot(t_days, eta_w - eta_i,
+        ax_res.plot(dates_w, eta_w - eta_i,
                     color=CON_COLS[n], lw=0.8, alpha=0.85,
                     label=f"{n} cons.")
 
     ax_res.axhline(0, color="grey", lw=0.6, ls="--")
-    ax_res.set_xlim(0, WINDOW_DAYS)
-    ax_res.set_xlabel("Time (days)")
+    ax_res.set_xlim(dates_w[0], dates_w[-1])
+    ax_res.xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=0, interval=2))
+    ax_res.xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
+    ax_res.tick_params(axis="x", labelrotation=20)
+    ax_res.set_xlabel("")
     ax_res.set_ylabel("Residual η (m)")
     ax_res.legend(loc="upper right", ncol=3, framealpha=0.7)
     ax_res.set_title(
