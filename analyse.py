@@ -82,6 +82,14 @@ CON_COLS  = {                   # reconstruction colours
 # ─────────────────────────────────────────────────────────────────────────────
 
 def main():
+    # ── 0. Pre-flight check ───────────────────────────────────────────────────
+    if not DATA_FILE.exists():
+        raise FileNotFoundError(
+            f"\nData file not found:\n  {DATA_FILE}\n\n"
+            "Set DATA_FILE in analyse.py to the path of your BODC gauge CSV.\n"
+            "Data can be downloaded from: https://www.bodc.ac.uk/"
+        )
+
     # ── 1. Load data ──────────────────────────────────────────────────────────
     print(f"Loading {LOCATION} tide gauge data …")
     t, eta, n_total = load_bodc(str(DATA_FILE), START_DATE)
