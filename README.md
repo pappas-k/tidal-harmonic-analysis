@@ -27,9 +27,18 @@ Demonstrated on **Avonmouth** (Bristol Channel, UK) — one of the highest tidal
 
 Tidal harmonic analysis decomposes the sea-surface elevation into a sum of sinusoidal components (constituents), each with a known astronomical frequency:
 
-$$\eta(t) = \sum_{i} A_i \cos(\omega_i t - \phi_i)$$
+$$\eta(t) = h + \sum_{i} f_i A_i \cos\bigl[\omega_i t + (V_0 + u)_i - \phi_i\bigr]$$
 
-where $A_i$ is the amplitude, $\omega_i$ the angular frequency, and $\phi_i$ the phase lag of constituent $i$. Amplitudes and phases are estimated from the gauge record by least-squares fitting using the [`uptide`](https://github.com/stephankramer/uptide) library.
+| Symbol | Meaning |
+|--------|---------|
+| $h$ | mean surface level relative to the reference datum |
+| $f_i$ | nodal correction factor — accounts for the long-period (~18.61 yr) modulation of constituent amplitude due to the lunar nodal cycle |
+| $A_i$ | tidal amplitude of constituent $i$ |
+| $\omega_i$ | angular frequency (rad s⁻¹), fixed by astronomy |
+| $(V_0 + u)_i$ | equilibrium argument at $t = 0$: $V_0$ is the astronomical argument and $u$ is the nodal phase correction |
+| $\phi_i$ | phase lag (rad) relative to the equilibrium tide, estimated from the gauge record |
+
+Amplitudes and phase lags are estimated by least-squares harmonic analysis using the [`uptide`](https://github.com/stephankramer/uptide) library. The mean level $h$ is removed prior to fitting (the gauge record is de-meaned), and nodal corrections $f_i$ and $(V_0+u)_i$ are applied internally by uptide based on the record's reference epoch.
 
 **39 constituents** are fitted, spanning four frequency bands:
 
