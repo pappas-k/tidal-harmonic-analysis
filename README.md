@@ -34,9 +34,9 @@ $$\eta(t) = h + \sum_{i} f_i A_i \cos\bigl[\omega_i t + (V_0 + u)_i - \phi_i\big
 | $h$ | mean surface level relative to the reference datum |
 | $f_i$ | nodal correction factor — accounts for the long-period (~18.61 yr) modulation of constituent amplitude due to the lunar nodal cycle |
 | $A_i$ | tidal amplitude of constituent $i$ |
-| $\omega_i$ | angular frequency (rad s⁻¹), fixed by astronomy |
+| $\omega_i$ | angular frequency (rad s⁻¹) |
 | $(V_0 + u)_i$ | equilibrium argument at $t = 0$: $V_0$ is the astronomical argument and $u$ is the nodal phase correction |
-| $\phi_i$ | phase lag (rad) relative to the equilibrium tide, estimated from the gauge record |
+| $\phi_i$ | phase lag (rad) relative to the corresponding constituent at Greenwich |
 
 Amplitudes and phase lags are estimated by least-squares harmonic analysis using the [`uptide`](https://github.com/stephankramer/uptide) library. The mean level $h$ is removed prior to fitting (the gauge record is de-meaned), and nodal corrections $f_i$ and $(V_0+u)_i$ are applied internally by uptide based on the record's reference epoch.
 
