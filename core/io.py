@@ -8,25 +8,22 @@ BODC CSV format (15-minute interval):
     - Column 11: tidal elevation (m)
     - Column 12: QC flag  ('N'=error, 'M'=missing, 'T'=suspect)
 """
-import datetime
 import numpy as np
 import pandas as pd
 
 
-def load_bodc(filepath: str, start_date: datetime.datetime):
+def load_bodc(filepath: str):
     """Load a BODC tidal gauge CSV and return quality-controlled (t, eta).
 
     Parameters
     ----------
     filepath : str
         Path to the BODC CSV file.
-    start_date : datetime.datetime
-        Epoch; t=0 corresponds to this date.
 
     Returns
     -------
     t : np.ndarray
-        Time in seconds since start_date (non-uniform after QC).
+        Time in seconds from the first observation (non-uniform after QC).
     eta : np.ndarray
         De-meaned tidal elevation in metres.
     n_total : int
