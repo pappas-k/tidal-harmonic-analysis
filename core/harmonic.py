@@ -9,7 +9,6 @@ import pandas as pd
 import uptide
 
 
-# 39 constituents spanning diurnal, semi-diurnal, and higher-harmonic bands
 CONSTITUENTS = [
     # Diurnal (period ~24 h)
     "Q1", "O1", "P1", "S1", "K1", "J1", "M1",
@@ -25,6 +24,7 @@ CONSTITUENTS = [
     # Higher harmonics
     "M3", "M5", "M6", "M7", "M8",
 ]
+N_CONSTITUENTS = len(CONSTITUENTS)   # 39
 
 
 def harmonic_analysis(
