@@ -73,7 +73,6 @@ plt.rcParams.update(
 GAUGE_COL = "#1a2a5e"           # dark navy – gauge data
 CON_COLS  = {                   # reconstruction colours
     2:  "#e8a838",
-    4:  "#e05c3a",
     8:  "#27ae60",
     12: "#6a0dad",
 }
@@ -216,7 +215,7 @@ def _fig_harmonic_analysis(t, eta, ha, reconstructions, nrmse_scan):
 
     # ── (a) Signal comparison ──────────────────────────────────────────────────
     ax_sig.plot(dates_w, eta_w, color=GAUGE_COL, lw=0.9, label="Gauge data", zorder=6)
-    for n in [2, 8, 12]:
+    for n in N_PLOT:
         t_r, eta_r = reconstructions[n]
         r_mask     = (t_r >= t_w[0]) & (t_r <= t_w[-1])
         dates_r    = pd.to_datetime(START_DATE) + pd.to_timedelta(t_r[r_mask], unit="s")
@@ -229,7 +228,6 @@ def _fig_harmonic_analysis(t, eta, ha, reconstructions, nrmse_scan):
     ax_sig.xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=0, interval=2))
     ax_sig.xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
     ax_sig.tick_params(axis="x", labelrotation=20)
-    ax_sig.set_xlabel("")
     ax_sig.set_ylabel("η (m)")
     ax_sig.legend(loc="upper left", ncol=2, framealpha=1.0)
     ax_sig.set_title(
@@ -250,7 +248,7 @@ def _fig_harmonic_analysis(t, eta, ha, reconstructions, nrmse_scan):
     )
 
     # ── (b) Residuals ──────────────────────────────────────────────────────────
-    for n in [2, 8, 12]:
+    for n in N_PLOT:
         t_r, eta_r = reconstructions[n]
         eta_i      = np.interp(t_w, t_r, eta_r)
         ax_res.plot(dates_w, eta_w - eta_i,
@@ -262,7 +260,6 @@ def _fig_harmonic_analysis(t, eta, ha, reconstructions, nrmse_scan):
     ax_res.xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=0, interval=2))
     ax_res.xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
     ax_res.tick_params(axis="x", labelrotation=20)
-    ax_res.set_xlabel("")
     ax_res.set_ylabel("Residual η (m)")
     ax_res.legend(loc="upper right", ncol=3, framealpha=0.7)
     ax_res.set_title(
