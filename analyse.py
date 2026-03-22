@@ -69,8 +69,8 @@ plt.rcParams.update(
     }
 )
 
-GAUGE_COL = "#1a2a5e"           # dark navy – gauge data
-CON_COLS  = {                   # reconstruction colours
+gauge_col = "#1a2a5e"           # dark navy – gauge data
+con_cols  = {                   # reconstruction colours
     2:  "#e8a838",
     8:  "#27ae60",
     12: "#6a0dad",
@@ -92,7 +92,7 @@ def main():
 
     # ── 1. Load data ──────────────────────────────────────────────────────────
     print(f"Loading {LOCATION} tide gauge data …")
-    t, eta, n_total = load_bodc(str(DATA_FILE))
+    t, eta, n_total = load_bodc(DATA_FILE)
     years        = (t[-1] - t[0]) / (365.25 * 86400)
     availability = 100.0 * len(t) / n_total
     print(f"  {len(t):,} / {n_total:,} observations retained  "
@@ -213,13 +213,13 @@ def _fig_harmonic_analysis(t, eta, ha, reconstructions, nrmse_scan):
     dates_w = pd.to_datetime(START_DATE) + pd.to_timedelta(t_w, unit="s")
 
     # ── (a) Signal comparison ──────────────────────────────────────────────────
-    ax_sig.plot(dates_w, eta_w, color=GAUGE_COL, lw=0.9, label="Gauge data", zorder=6)
+    ax_sig.plot(dates_w, eta_w, color=gauge_col, lw=0.9, label="Gauge data", zorder=6)
     for n in N_PLOT:
         t_r, eta_r = reconstructions[n]
         r_mask     = (t_r >= t_w[0]) & (t_r <= t_w[-1])
         dates_r    = pd.to_datetime(START_DATE) + pd.to_timedelta(t_r[r_mask], unit="s")
         ax_sig.plot(dates_r, eta_r[r_mask],
-                    color=CON_COLS[n], lw=1.1, alpha=0.9,
+                    color=con_cols[n], lw=1.1, alpha=0.9,
                     label=f"{n} constituents", zorder=5)
 
     ax_sig.axhline(0, color="grey", lw=0.5, ls="--")
@@ -251,7 +251,7 @@ def _fig_harmonic_analysis(t, eta, ha, reconstructions, nrmse_scan):
         t_r, eta_r = reconstructions[n]
         eta_i      = np.interp(t_w, t_r, eta_r)
         ax_res.plot(dates_w, eta_w - eta_i,
-                    color=CON_COLS[n], lw=0.8, alpha=0.85,
+                    color=con_cols[n], lw=0.8, alpha=0.85,
                     label=f"{n} cons.")
 
     ax_res.axhline(0, color="grey", lw=0.6, ls="--")
@@ -271,7 +271,7 @@ def _fig_harmonic_analysis(t, eta, ha, reconstructions, nrmse_scan):
     sub   = ha.head(top_n)
     y_pos = np.arange(top_n)
 
-    bars = ax_amp.barh(y_pos, sub["Amplitude"], color=GAUGE_COL, alpha=0.82)
+    bars = ax_amp.barh(y_pos, sub["Amplitude"], color=gauge_col, alpha=0.82)
     for bar in bars[:12]:
         bar.set_alpha(0.90)
     for bar in bars[12:]:
@@ -294,7 +294,7 @@ def _fig_harmonic_analysis(t, eta, ha, reconstructions, nrmse_scan):
     nrmse_vals = [nrmse_scan[n] for n in n_vals]
 
     ax_err.plot(n_vals, nrmse_vals, "o-", color="#c0392b", lw=1.6, ms=5, zorder=5)
-    ax_err.axvline(12, color=CON_COLS[12], lw=1.0, ls="--", alpha=0.7, label="12 cons.")
+    ax_err.axvline(12, color=con_cols[12], lw=1.0, ls="--", alpha=0.7, label="12 cons.")
     ax_err.set_xlabel("Number of constituents")
     ax_err.set_ylabel("NRMSE")
     ax_err.set_xticks(n_vals)
