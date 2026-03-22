@@ -8,11 +8,13 @@ BODC CSV format (15-minute interval):
     - Column 11: tidal elevation (m)
     - Column 12: QC flag  ('N'=error, 'M'=missing, 'T'=suspect)
 """
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 
 
-def load_bodc(filepath: str):
+def load_bodc(filepath: "str | Path"):
     """Load a BODC tidal gauge CSV and return quality-controlled (t, eta).
 
     Parameters
