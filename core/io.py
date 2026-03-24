@@ -19,7 +19,7 @@ def load_bodc(filepath: "str | Path"):
 
     Parameters
     ----------
-    filepath : str
+    filepath : str or Path
         Path to the BODC CSV file.
 
     Returns
