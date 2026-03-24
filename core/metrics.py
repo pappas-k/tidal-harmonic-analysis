@@ -131,7 +131,7 @@ def monthly_metrics(
                     "PE":   potential_energy(t_m, eta_m),
                     "Hm0":  hm0(eta_m),
                     "P50":  float(np.percentile(r, 50)),
-                    "IQR":  float(np.percentile(r, 75) - np.percentile(r, 25)),
+                    "IQR":  float(np.diff(np.percentile(r, [25, 75]))[0]),
                 }
             )
     return pd.DataFrame(records)
