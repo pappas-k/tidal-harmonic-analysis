@@ -69,13 +69,6 @@ plt.rcParams.update(
     }
 )
 
-gauge_col = "#1a2a5e"           # dark navy – gauge data
-con_cols  = {                   # reconstruction colours
-    2:  "#e8a838",
-    8:  "#27ae60",
-    12: "#6a0dad",
-}
-
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Main
@@ -185,6 +178,12 @@ def _form_factor(ha):
 
 def _fig_harmonic_analysis(t, eta, ha, reconstructions, nrmse_scan):
     """Four-panel figure: signal comparison · residuals · amplitudes · NRMSE."""
+    gauge_col = "#1a2a5e"           # dark navy – gauge data
+    con_cols  = {                   # reconstruction colours
+        2:  "#e8a838",
+        8:  "#27ae60",
+        12: "#6a0dad",
+    }
 
     fig = plt.figure(figsize=(13, 10))
     gs  = gridspec.GridSpec(
